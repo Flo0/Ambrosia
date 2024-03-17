@@ -134,7 +134,7 @@ map.put(key, coolObj);
 ## Queries
 
 MongoMap has a method to create a query builder.
-It also provides a toList method to execute the query and return the results as a list.
+It also provides a toplist query method and a method to query single properties.
 
 ### Toplist queries
 
