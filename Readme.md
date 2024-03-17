@@ -28,9 +28,9 @@ For the non-Spigot version simply replace `AmbrosiaSpigot` with `Ambrosia` in th
 ```
 ```xml
 <dependency>
-    <groupId>com.gestankbratwurst.ambrosia</groupId>
-    <artifactId>AmbrosiaSpigot</artifactId>
-    <version>1.0B-SNAPSHOT</version>
+    <groupId>com.github.Flo0</groupId>
+    <artifactId>Ambrosia</artifactId>
+    <version>Tag</version>
 </dependency>
 ```
 
