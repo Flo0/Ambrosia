@@ -30,7 +30,7 @@ For the non-Spigot version simply replace `AmbrosiaSpigot` with `Ambrosia` in th
 <dependency>
     <groupId>com.gestankbratwurst.ambrosia</groupId>
     <artifactId>AmbrosiaSpigot</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0B-SNAPSHOT</version>
 </dependency>
 ```
 
