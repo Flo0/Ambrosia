@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/Flo0/Ambrosia.svg)](https://jitpack.io/#Flo0/Ambrosia)
+
 # Ambrosia
 
 Ambrosia is an easy-to-use library for interacting with MongoDB.

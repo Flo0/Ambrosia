@@ -11,6 +11,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ConfigurationSerializableTypeAdapter<T extends ConfigurationSerializable> implements JsonSerializer<T>, JsonDeserializer<T> {
@@ -27,6 +28,15 @@ public class ConfigurationSerializableTypeAdapter<T extends ConfigurationSeriali
 
   @Override
   public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
-    return context.serialize(src.serialize());
+    Map<String, Object> data = src.serialize();
+
+    Map<String, Object> serialized = new HashMap<>();
+
+    String typeAlias = ConfigurationSerialization.getAlias(src.getClass());
+    serialized.put(ConfigurationSerialization.SERIALIZED_TYPE_KEY, typeAlias);
+
+    serialized.putAll(data);
+
+    return context.serialize(serialized);
   }
 }
