@@ -10,10 +10,7 @@ import java.util.function.Consumer;
 public class SpigotCapableAmbrosia {
 
   public static Ambrosia create(MongoDatabase database) {
-    return create(database, builder -> {
-      builder.enableComplexMapKeySerialization();
-      builder.disableHtmlEscaping();
-    });
+    return create(database, GsonBuilder::enableComplexMapKeySerialization);
   }
 
   public static Ambrosia create(MongoDatabase database, Consumer<GsonBuilder> consumer) {

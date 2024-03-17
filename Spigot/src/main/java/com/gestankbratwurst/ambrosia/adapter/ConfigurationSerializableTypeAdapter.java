@@ -4,39 +4,47 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.google.gson.reflect.TypeToken;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Base64;
 
 public class ConfigurationSerializableTypeAdapter<T extends ConfigurationSerializable> implements JsonSerializer<T>, JsonDeserializer<T> {
-
-  private final Type mapType = new TypeToken<Map<String, Object>>() {
-  }.getType();
 
   @Override
   @SuppressWarnings("unchecked")
   public T deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    Map<String, Object> data = context.deserialize(json, mapType);
-    return (T) ConfigurationSerialization.deserializeObject(data);
+    try {
+      byte[] data = Base64.getDecoder().decode(json.getAsString());
+      ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
+      BukkitObjectInputStream bukkitObjectInputStream = new BukkitObjectInputStream(inputStream);
+      T result = (T) bukkitObjectInputStream.readObject();
+      bukkitObjectInputStream.close();
+      return result;
+    } catch (IOException | ClassNotFoundException e) {
+      throw new JsonParseException(e);
+    }
   }
 
   @Override
   public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
-    Map<String, Object> data = src.serialize();
-
-    Map<String, Object> serialized = new HashMap<>();
-
-    String typeAlias = ConfigurationSerialization.getAlias(src.getClass());
-    serialized.put(ConfigurationSerialization.SERIALIZED_TYPE_KEY, typeAlias);
-
-    serialized.putAll(data);
-
-    return context.serialize(serialized);
+    try {
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      BukkitObjectOutputStream bukkitObjectOutputStream = new BukkitObjectOutputStream(outputStream);
+      bukkitObjectOutputStream.writeObject(src);
+      bukkitObjectOutputStream.close();
+      String data = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+      return new JsonPrimitive(data);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
