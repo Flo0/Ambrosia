@@ -192,7 +192,7 @@ MongoCollection<SomeCoolObj> collection = ambrosia.createMongoCollection("Collec
 ```java
 // Create a MongoMap with UUID keys and SomeCoolObj values
 // Preferably use a field to store the map
-Map<UUID, SomeCoolObj> map = ambrosia.createMongoMap("CollectionName", UUID.class, SomeCoolObj.class);
+MongoMap<UUID, SomeCoolObj> map = ambrosia.createMapView("CollectionName", UUID.class, SomeCoolObj.class);
 ...
 SomeCoolObj coolObj = ...;
 UUID key = coolObj.getUuid();
@@ -210,7 +210,7 @@ It also provides a toplist query method and a method to query single properties.
 ### Toplist queries
 
 ```java
-MongoMap<UUID, SomeCoolObj> map = ambrosia.createMongoMap("CollectionName", UUID.class, SomeCoolObj.class);
+MongoMap<UUID, SomeCoolObj> map = ambrosia.createMapView("CollectionName", UUID.class, SomeCoolObj.class);
 
 // Query a top list of 10 objects, ordered by the "killCount" field
 boolean ascending = false;
