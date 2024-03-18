@@ -1,4 +1,4 @@
-package com.gestankbratwurst.ambrosia.collections;
+package com.gestankbratwurst.ambrosia.impl.mongodb.collections;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;

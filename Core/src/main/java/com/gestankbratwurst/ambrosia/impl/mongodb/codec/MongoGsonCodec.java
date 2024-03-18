@@ -1,4 +1,4 @@
-package com.gestankbratwurst.ambrosia.codec;
+package com.gestankbratwurst.ambrosia.impl.mongodb.codec;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
